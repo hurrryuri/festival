@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>축제상세보기</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+
+    <form action="#" method="post" th:object="${boardDTO}" enctype="multipart/form-data">
+
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="bno" class="form-label">순번</label>
+                            <input type="number" class="form-control" th:field="*{bno}"  required id="bno" >
+                            <p th:if="${#fields.hasErrors('bno')}" th:errors="*{bno}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">축제명</label>
+                            <input type="title" min="0" class="form-control" th:field="*{title}" id="title">
+                            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="schedule"  class="form-label">축제기간</label>
+                            <input type="text" min="0" class="form-control" th:field="*{schedule}" id="schedule">
+                            <p th:if="${#fields.hasErrors('schedule')}" th:errors="*{schedule}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="location"  class="form-label">축제장소</label>
+                            <input type="text" min="0" class="form-control" th:field="*{location}" id="location">
+                            <p th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="pay"  class="form-label">입장료</label>
+                            <input type="text" min="0" class="form-control" th:field="*{pay}" id="pay">
+                            <p th:if="${#fields.hasErrors('pay')}" th:errors="*{pay}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="parking"  class="form-label">주차정보</label>
+                            <input type="text" min="0" class="form-control" th:field="*{parking}" id="parking">
+                            <p th:if="${#fields.hasErrors('parking')}" th:errors="*{parking}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="content" class="form-label">축제내용</label>
+                            <textarea class="form-control" th:field="*{content}" id="content" rows="3"></textarea>
+                            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="tel"  class="form-label">문의처</label>
+                            <input type="text" min="0" class="form-control" th:field="*{tel}" id="tel">
+                            <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12">
+                        <div class="mb-3 imgA">
+
+                            <div class="row  mb-5">
+                                <th:block th:each="img: ${boardDTO.boardImgDTOList}">
+                                    <th:block th:if="${img.repimgYn == 'Y'}">
+                                        <div class="col-12">
+                                            대표이미지
+                                            <img width="100%" th:src="${img.imgUrl}">
+                                        </div>
+                                    </th:block>
+                                </th:block>
+                            </div>
+
+                            추가이미지
+                            <div class="row row-cols-md-2">
+
+                                <th:block th:each="img: ${boardDTO.boardImgDTOList}">
+                                    <th:block th:unless="${img.repimgYn == 'Y'}">
+                                        <div class="col">
+                                            <img width="100%" th:src="${img.imgUrl}">
+                                        </div>
+                                    </th:block>
+                                </th:block>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="button" class="btn btn-dark updatebtn">수정</button>
+                        <button type="button">목록</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+</th:block>
+
+<th:block layout:fragment="script">
+
+    <script th:inline="javascript">
+        let boardBno = [[${boardDTO.id}]]
+
+        $(document).ready(function (){
+            $(".updatebtn").on("click", function (){
+                location.href = "/admin/board/update?id=" + boardBno
+            })
+        })
+
+
+
+    </script>
+
+</th:block>
+
+</body>
+</html>

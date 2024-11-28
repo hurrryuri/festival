@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>축제등록화면</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+
+    <form action="/admin/board/new" method="post" th:object="${boardDTO}" enctype="multipart/form-data">
+
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="bno" class="form-label">순번</label>
+                            <input type="number" class="form-control" th:field="*{bno}"  required id="bno" >
+                            <p th:if="${#fields.hasErrors('bno')}" th:errors="*{bno}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">축제명</label>
+                            <input type="title" min="0" class="form-control" th:field="*{title}" id="title">
+                            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="schedule"  class="form-label">축제기간</label>
+                            <input type="text" min="0" class="form-control" th:field="*{schedule}" id="schedule">
+                            <p th:if="${#fields.hasErrors('schedule')}" th:errors="*{schedule}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="location"  class="form-label">축제장소</label>
+                            <input type="text" min="0" class="form-control" th:field="*{location}" id="location">
+                            <p th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="pay"  class="form-label">입장료</label>
+                            <input type="text" min="0" class="form-control" th:field="*{pay}" id="pay">
+                            <p th:if="${#fields.hasErrors('pay')}" th:errors="*{pay}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="parking"  class="form-label">주차정보</label>
+                            <input type="text" min="0" class="form-control" th:field="*{parking}" id="parking">
+                            <p th:if="${#fields.hasErrors('parking')}" th:errors="*{parking}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="content" class="form-label">축제내용</label>
+                            <textarea class="form-control" th:field="*{content}" id="content" rows="3"></textarea>
+                            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="tel"  class="form-label">문의처</label>
+                            <input type="text" min="0" class="form-control" th:field="*{tel}" id="tel">
+                            <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+
+                    <!--이미지 미리보기 -->
+                    <div class="col-12">
+                        <div class="row  main imgpreview">
+                        </div>
+
+                        <div class="row row-cols-md-3 imgpreviewinput imgpreview">
+
+
+                        </div>
+
+
+
+                        <div class="mb-3 imgA">
+                            <label for="formFile" class="form-label">대표이미지</label>
+                            <input class="form-control imgInput mainimg"  id="formFile" accept="image/*" name="multipartFile" type="file" >
+
+                            <label for="formFilede" class="form-label">추가 이미지</label>
+                            <input class="form-control imgInput "  id="formFilede" accept="image/*" name="multipartFile" type="file" >
+
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-dark">저장</button>
+                        <button type="button" class="btn btn-dark listbtn">목록</button>
+                        <script>
+                            $(".listbtn").on("click", function (){
+                                location.href="/admin/board/list";
+                            })
+                        </script>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+</th:block>
+
+<th:block layout:fragment="script">
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            let msg = [[${msg}]]
+            if(msg!=null){
+                alert(msg)
+            }
+
+
+            $("form").on("submit", function (e) {
+                if(itemNmValid()){
+                    return false
+                }
+                if($(".main").find('input:eq(0)')  == ""){
+                    //  $(".mainimg").val()==""
+                    //대표이미지가 없을경우
+                    alert("대표이미지를 넣어주세요")
+
+                    return false
+                }
+
+            })
+
+
+            $(".imgpreview").on("click", "button", function () {
+
+                $(this).parent().remove()
+
+
+            })
+
+            bindDomEvent()
+            //이미지 파일 유효성 검사
+            function bindDomEvent() {
+                $(".imgA").on("change", "input", function () {
+                    let fileName = $(this).val().split("\\").pop() //이미지 파일명
+                    //이미지파일명의 확장자를 추출해서 확인하다.
+
+                    let fileExt = fileName.substring(fileName.lastIndexOf(".") +1 )
+                    //확장자 소문자로 변환
+
+                    fileExt = fileExt.toLowerCase()
+
+                    if(fileExt != "jpg" && fileExt != "jpeg" &&
+                        fileExt != "gif" && fileExt != "png" && fileExt != "bmp"){
+
+                        $(this).val("")
+                        alert("이미지 파일만 넣어주세요")
+                        return false;
+                    }
+
+                    //이상이 없다면 이미지 미리보기 추가
+                    if(this.classList.contains("mainimg")){
+                        //클래스중에 mainimg가 있다면
+                        console.log("이건 대표이미지 인풋입니다.")
+                        readURL(this);
+                        $(".mainimg").val()
+
+                    }else {
+                        readURL1(this);
+
+
+                    }
+
+
+
+                })
+            }
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        let inputtag = document.createElement("input")
+
+                        inputtag.type = "file"
+                        inputtag.name = "multipartFile"
+                        // inputtag.files = input.files //참조값 주소
+
+                        const dataTranster = new DataTransfer();
+                        const fileDatas = Array.from(input.files);
+                        /*신규 파일데이터는..
+                        new DataTransfer();
+                        이걸로 files 라는 객체를 만들수 있어서..
+                        이걸로 만들어서 배열 돌리면서 추가추가 한거임*/
+                        fileDatas.forEach(file =>  dataTranster.items.add(file) );
+                        inputtag.files = dataTranster.files;
+
+                        let str1 = ` <div class="preview col">
+                                         <img width="100%" src="${e.target.result}">
+                                         <button type='button' class='bb'>올리지 않기</button>
+                                     </div>`
+                        $(".main").html(str1)
+                        $(".main").find('div:eq(0)').append(inputtag)
+                        $(".main").find('input').hide()
+                        $(".imgInput").val("")
+
+                    };
+                    reader.readAsDataURL(input.files[0]);
+
+
+                }
+            }
+            function readURL1(input) {
+                if (input.files && input.files[0]) {
+
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        let inputtag = document.createElement("input")
+                        inputtag.type = "file"
+                        inputtag.name = "multipartFile"
+                        /*inputtag.files = input.files*/
+                        const dataTranster = new DataTransfer();
+                        const $fileDatas = Array.from(input.files);
+                        $fileDatas.forEach(file =>  dataTranster.items.add(file) );
+                        inputtag.files = dataTranster.files;
+
+                        let str1 = ` <div class="preview col">
+                                  <img width="100%" src="${e.target.result}">
+                                  <button type='button' class='bb'>올리지 않기</button>
+                                </div>`
+                        $(".imgpreviewinput").prepend(str1)
+                        $(".imgpreviewinput").find('div:eq(0)').prepend(inputtag)
+                        $(".imgpreviewinput").find('input:eq(0)').hide()
+
+                        $(".imgInput").val("")
+
+                    };
+                    reader.readAsDataURL(input.files[0]);
+
+                }
+
+            }
+
+
+
+
+
+
+        })
+
+    </script>
+
+</th:block>
+
+</body>
+</html>
