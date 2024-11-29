@@ -12,9 +12,13 @@
 
     <div class="row mt-5">
         <div class="col-8 offset-2">
+            <h1>
+                로그인
+            </h1>
+
             <div  th:if="${param.error}">
                 <h1>
-                   로그인
+                   ID또는 비밀번호를 확인해주세요.
                 </h1>
             </div>
 
@@ -55,10 +59,9 @@
 
 </th:block>
 
+
+
 <th:block layout:fragment="script">
-
-
-
 </th:block>
 
 </body>

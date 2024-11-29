@@ -12,19 +12,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/member")
+
 @Controller
+@RequestMapping("/member")
 @RequiredArgsConstructor
 @Log4j2
 public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/adminregister")
+    @GetMapping("/adminRegister")
     public String adminRegister(Model model) {
+        log.info("진입");
 
         model.addAttribute("memberDTO", new MemberDTO());
 
+        log.info("반환");
         return "member/adminRegister";
 
     }
@@ -36,7 +39,7 @@ public class MemberController {
 
             log.info((bindingResult.getAllErrors()));
 
-            return "member/adminregister";
+            return "adminRegister";
 
         }
 
@@ -53,5 +56,9 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String loginAdmin(){return "/admin/login";}
+    public String loginAdmin(){
+
+        log.info("로그인");
+
+        return "/member/login";}
 }

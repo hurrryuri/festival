@@ -28,8 +28,10 @@ public class SecurityConfig {
                         authorization -> authorization
                                 .requestMatchers("/member/login/**").permitAll()      //로그인페이지는 누구나 접속이 가능한 권한
                                 .requestMatchers("/board/register").authenticated() // 로그인 한 사람만 접속 가능
-                                .requestMatchers("/member/**").hasRole("ADMIN")
-                                .requestMatchers("/member/**").hasRole("SUPERADMIN")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/user/list").hasRole("ADMIN")
+                                .requestMatchers("/order/**").authenticated()
+                                .anyRequest().permitAll()       // 그외 다 열어
 //                            .anyRequest().authenticated()   //그 이외에는 다 로그인해서 접속해
 
                 )
@@ -37,9 +39,9 @@ public class SecurityConfig {
                 .csrf( csrf -> csrf.disable())
                 // 로그인
                 .formLogin(
-                        formLogin ->formLogin.loginPage("/member/adminregister")      //기본 로그인 페이지 지정
+                        formLogin ->formLogin.loginPage("/member/login")      //기본 로그인 페이지 지정
                                 .defaultSuccessUrl("/")                     //로그인이 성공했다면
-                                .usernameParameter("memberID")                      //로그인 <input name="email">
+                                .usernameParameter("email")                      //로그인 <input name="email">
                         //컨트롤러로 보낼때~~
                 )
                 // 로그아웃

@@ -105,4 +105,11 @@ public class BoardController {
 
 
     }
+
+
+    @GetMapping("/festival/list")
+    public String aaaa() {
+
+       return null;
+    }
 }

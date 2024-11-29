@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">>
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+</head>
+<body >
+<th:block layout:fragment="content">
+
+    <div class="row mt-5">
+        <div class="col-8 offset-3">
+      <h1>회원가입</h1>
+
+      <form class="row g-3" action="/member/adminRegister" method="post" th:object="${memberDTO}">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="memberID" class="form-label">ID</label>
+            <input type="text" th:field="*{memberID}" class="form-control me-2" id="memberID" placeholder="ID를 입력해주세요" required>
+            <button type="button" class="btn btn-outline-primary" id="checkbtn">중복확인</button>
+            <p th:if="${#fields.hasErrors('memberID')}" th:errors="*{memberID}" class="fieldError"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="비밀번호를 입력해주세요" required>
+          </div>
+          <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
+
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-6">
+            <label for="name" class="form-label">이름</label>
+            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="이름을 입력해주세요">
+          </div>
+          <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError"></p>
+          <span class="name"></span>
+
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="이메일을 입력해주세요" required>
+          </div>
+          <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
+        </div>
+
+
+
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-primary formbtn">회원가입</button>
+          <button type="submit" class="btn btn-primary">로그인</button>
+        </div>
+      </form>
+
+      </div>
+
+      </div>
+      <script th:inline="javascript">
+
+        let msg = [[${msg}]]
+        if(msg){
+          alert(msg)
+        }
+        let sameCheck = false;
+
+
+          $("checkbtn").on("submit", function (e){
+
+              let data = $(".memberID").val()
+
+          })
+
+
+          $("form").on("submit", function (e){
+
+
+              if(blankMemberID() == true){
+                  alert("ID를 입력해주세요.")
+                  return;
+              }
+              if(blankPassword() == true){
+                  alert("비밀번호를 입력해주세요.")
+                  return;
+              }
+              if(blankName() == true){
+                  alert("이름을 입력해주세요.")
+                  return;
+              }
+              if(blankEmail() == true){
+                  alert("이메일을 입력해주세요.")
+                  return;
+              }
+
+              if(sameCheck() == false){
+                  alert("ID를 중복체크 해주세요")
+                  return;
+
+
+              }})
+
+
+      </script>
+</th:block>
+
+<th:block layout:fragment="script">
+
+
+
+</th:block>
+
+</body>
+</html>
