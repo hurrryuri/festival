@@ -20,7 +20,7 @@ public class MemberDTO {
     private Long mno;
 
     @NotBlank
-    @Size(min = 4, max = 20, message = "ID는 2자 이상 20자 이하로 작성해주세요")
+    @Size(min = 4, max = 20, message = "ID는 4자 이상 20자 이하로 작성해주세요")
     private String memberID;
 
     @NotBlank

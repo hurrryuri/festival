@@ -5,12 +5,17 @@ import com.example.festival.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Controller
@@ -32,14 +37,22 @@ public class MemberController {
 
     }
 
-    @PostMapping("/adminregister")
+
+
+    @PostMapping("/adminRegister")
     public String adminRegisterPost(@Valid MemberDTO memberDTO, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
 
-            log.info((bindingResult.getAllErrors()));
+            log.info("회원가입하면 저장되니? : " + memberDTO);
 
-            return "adminRegister";
+            if(bindingResult.hasErrors()){
+                log.info((bindingResult.getAllErrors()));
+            }
+
+
+
+            return "member/adminRegister";
 
         }
 
@@ -49,7 +62,7 @@ public class MemberController {
 
             model.addAttribute("msg", e.getMessage());
 
-            return "admin/adminRegister";
+            return "member/adminRegister";
         }
 
         return null;
@@ -60,5 +73,6 @@ public class MemberController {
 
         log.info("로그인");
 
-        return "/member/login";}
+        return "/member/login";
+    }
 }

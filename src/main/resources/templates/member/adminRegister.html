@@ -9,58 +9,66 @@
 <body >
 <th:block layout:fragment="content">
 
-    <div class="row mt-5">
-        <div class="col-8 offset-3">
-      <h1>회원가입</h1>
+  <div class="row mt-5">
+    <div class="col-8 offset-3">
+      <div class="col-6 text-center">
+        <h1>회원가입</h1>
+      </div>
+      <div class="d=flex vh-100">
+        <div class="container my-auto">
+          <div class=" row justify-content-center">
 
-      <form class="row g-3" action="/member/adminRegister" method="post" th:object="${memberDTO}">
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="memberID" class="form-label">ID</label>
-            <input type="text" th:field="*{memberID}" class="form-control me-2" id="memberID" placeholder="ID를 입력해주세요" required>
-            <button type="button" class="btn btn-outline-primary" id="checkbtn">중복확인</button>
-            <p th:if="${#fields.hasErrors('memberID')}" th:errors="*{memberID}" class="fieldError"></p>
+            <form class="row g-3" action="/member/adminRegister" method="post" th:object="${memberDTO}">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="memberID" class="form-label">ID</label>
+                  <div class="d-flex align-items-center">
+              <input type="text" th:field="*{memberID}" class="form-control me-2" id="memberID" placeholder="ID는 4~20 이내로 입력해주세요" required>
+                  <button type="button" class="btn btn-outline-primary btn-sm" id="checkbtn">중복확인</button>
+                  </div>
+                  <p th:if="${#fields.hasErrors('memberID')}" th:errors="*{memberID}" class="fieldError"></p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="비밀번호는 4~20 이내로 입력해주세요" required>
+                </div>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
+
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-6">
+                  <label for="name" class="form-label">이름</label>
+                  <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="이름을 입력해주세요">
+                </div>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError"></p>
+                <span class="name"></span>
+
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="이메일을 입력해주세요" required>
+                </div>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
+              </div>
+
+              <div class="col-6 text-center">
+                <button type="submit" class="btn btn-primary formbtn">회원가입</button>
+                <a href="/member/login" class="btn btn-primary">로그인</a>
+              </div>
+            </form>
           </div>
         </div>
-
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="비밀번호를 입력해주세요" required>
-          </div>
-          <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
-
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-6">
-            <label for="name" class="form-label">이름</label>
-            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="이름을 입력해주세요">
-          </div>
-          <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError"></p>
-          <span class="name"></span>
-
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="이메일을 입력해주세요" required>
-          </div>
-          <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
-        </div>
-
-
-
-        <div class="col-12 text-center">
-          <button type="submit" class="btn btn-primary formbtn">회원가입</button>
-          <button type="submit" class="btn btn-primary">로그인</button>
-        </div>
-      </form>
-
       </div>
 
-      </div>
+    </div>
+
+  </div>
       <script th:inline="javascript">
 
         let msg = [[${msg}]]
@@ -70,39 +78,55 @@
         let sameCheck = false;
 
 
-          $("checkbtn").on("submit", function (e){
+          $("#checkbtn").on("click", function (){
 
-              let data = $(".memberID").val()
-
-          })
+            let  memberID = $(".memberID").val().trim();
+            if(!memberID) {
+              alert("ID를 입력해주세요");
+              return;
+            }
+            $.ajax({
+              url: "checkMemberID",
+              type : "POST",
+              data: {memberID : meberID },
+              success: function (response) {
+                if (response.exists) {
+                  alert("이미 사용중인 ID입니다.");
+                  sameCheck = false;
+                }else  {
+                  alert(" 사용 가능한 ID이니다. ");
+                  sameCheck = true;
+                }
+              }
+            });
+          });
 
 
           $("form").on("submit", function (e){
 
 
-              if(blankMemberID() == true){
-                  alert("ID를 입력해주세요.")
-                  return;
+              if(!validateInput(".memberID" , "ID를 입력해주세요.") ||
+            !validateInput(".password", "비밀번호를 입력해주세요.") ||
+            !validateInput(".name", "이름을 입력해주세요.") ||
+            !validateInput(".email", "이메일을 입력해주세요.")) {
+                e.preventDefault();
+                return false;
               }
-              if(blankPassword() == true){
-                  alert("비밀번호를 입력해주세요.")
-                  return;
+              if (!sameCheck){
+              alert("ID를 중복체크 해주세요.");
+              e.preventDefault();
+              return false;
               }
-              if(blankName() == true){
-                  alert("이름을 입력해주세요.")
-                  return;
-              }
-              if(blankEmail() == true){
-                  alert("이메일을 입력해주세요.")
-                  return;
-              }
+          });
 
-              if(sameCheck() == false){
-                  alert("ID를 중복체크 해주세요")
-                  return;
+          function validateInput(selector, message){
+            if(!$(selector).val().trim()){
+              alert(message);
+              return false;
+            }
+            return true;
+          }
 
-
-              }})
 
 
       </script>

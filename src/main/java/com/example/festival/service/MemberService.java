@@ -4,23 +4,23 @@ import com.example.festival.dto.MemberDTO;
 import com.example.festival.entity.Member;
 import com.example.festival.repository.MemberRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
 
 
     private final MemberRepository memberRepository;
 
-    public MemberService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
-
-    @Override
+       @Override
     public UserDetails loadUserByUsername(String memberID) throws UsernameNotFoundException {
 
 
@@ -34,13 +34,13 @@ public class MemberService implements UserDetailsService {
         return User.builder()
                 .username(member.getMemberID())
                 .password(member.getPassword())
-                .roles(member.getRole().toString())
+                .roles(member.getRole().name())
                 .build();
     }
 
     public Member saveMember(MemberDTO memberDTO) {
         //회원가입여부 확인
-        validateDuplicateMember(memberDTO.toString());
+        validateDuplicateMember(memberDTO.getMemberID());
 
 
         Member member =
