@@ -26,7 +26,7 @@
                     <div class="col-12">
                         <div class="mb-3">
                             <label for="title" class="form-label">축제명</label>
-                            <input type="title" min="0" class="form-control" th:field="*{title}" id="title">
+                            <input type="title" min="0" class="form-control" name="title" th:field="*{title}" id="title">
                             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                     <div class="col-12">
                         <div class="mb-3">
                             <label for="schedule"  class="form-label">축제기간</label>
-                            <input type="text" min="0" class="form-control" th:field="*{schedule}" id="schedule">
+                            <input type="date" min="0" class="form-control" th:field="*{schedule}" id="schedule">
                             <p th:if="${#fields.hasErrors('schedule')}" th:errors="*{schedule}" class="fieldError"></p>
                         </div>
                     </div>
@@ -76,6 +76,20 @@
                             <label for="tel"  class="form-label">문의처</label>
                             <input type="text" min="0" class="form-control" th:field="*{tel}" id="tel">
                             <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="tel"  class="form-label">detail</label>
+                            <input type="text" min="0" class="form-control" th:field="*{detail}" id="tel">
+                            <p th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}" class="fieldError"></p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="tel"  class="form-label">디테일</label>
+                            <input type="text" min="0" class="form-control" th:field="*{tagtitle}" id="tel">
+                            <p th:if="${#fields.hasErrors('tagtitle')}" th:errors="*{tagtitle}" class="fieldError"></p>
                         </div>
                     </div>
 
@@ -232,9 +246,10 @@
                         let inputtag = document.createElement("input")
                         inputtag.type = "file"
                         inputtag.name = "multipartFile"
-                        /*inputtag.files = input.files*/
+
                         const dataTranster = new DataTransfer();
                         const $fileDatas = Array.from(input.files);
+
                         $fileDatas.forEach(file =>  dataTranster.items.add(file) );
                         inputtag.files = dataTranster.files;
 

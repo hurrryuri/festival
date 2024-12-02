@@ -50,7 +50,6 @@ public class MemberDTO {
 
         member.setPassword(passwordEncoder.encode(memberDTO.password));
         member.setRole(Role.ADMIN);
-        member.setRole(Role.SUPERADMIN);
 
         return member;
     }

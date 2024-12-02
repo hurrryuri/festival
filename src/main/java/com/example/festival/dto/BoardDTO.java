@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,22 +28,19 @@ public class BoardDTO {
     @Size(max = 50)
     private String title;
 
-    @NotBlank
-    @Size(max = 50)
+    @NotNull
     private LocalDate schedule;
 
     @NotBlank
     @Size(max = 50)
     private String location;
 
-    @NotBlank
-    @Size(max = 20)
+    @NotNull
     private int pay;
 
     @Size(max = 50)
     private String parking;
 
-    @NotBlank
     private String detail;
 
     @NotBlank
@@ -49,11 +48,11 @@ public class BoardDTO {
     private String content;
 
     @Size(max = 20)
-    private int tel;
+    private String tel;
 
     private LocalDate updatedate;
 
-    @NotBlank
+
     @Size(max = 255)
     private String tagtitle;
 

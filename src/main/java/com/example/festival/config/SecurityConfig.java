@@ -28,7 +28,7 @@ public class SecurityConfig {
                         authorization -> authorization
                                 .requestMatchers("/member/login/**").permitAll()      //로그인페이지는 누구나 접속이 가능한 권한
                                 .requestMatchers("/board/register").authenticated() // 로그인 한 사람만 접속 가능
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                                 .requestMatchers("/user/list").hasRole("ADMIN")
                                 .requestMatchers("/order/**").authenticated()
                                 .anyRequest().permitAll()       // 그외 다 열어
@@ -40,8 +40,8 @@ public class SecurityConfig {
                 // 로그인
                 .formLogin(
                         formLogin ->formLogin.loginPage("/member/login")      //기본 로그인 페이지 지정
-                                .defaultSuccessUrl("/")                     //로그인이 성공했다면
-                                .usernameParameter("email")                      //로그인 <input name="email">
+                                .defaultSuccessUrl("/admin/board/list")                     //로그인이 성공했다면
+                                .usernameParameter("memberID")                      //로그인 <input name="email">
                         //컨트롤러로 보낼때~~
                 )
                 // 로그아웃

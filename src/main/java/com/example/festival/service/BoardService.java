@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.IIOException;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,16 +26,16 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final ModelMapper modelMapper;
-   // private final BoardImgService boardImgService;
+    private final BoardImgService boardImgService;
 
 
-    public Long saveBoard(BoardDTO boardDTO, List<MultipartFile> multipartFiles) throws IIOException{
+    public Long saveBoard(BoardDTO boardDTO, List<MultipartFile> multipartFiles) throws IOException {
 
         Board board = modelMapper.map(boardDTO, Board.class);
 
         board = boardRepository.save(board);
 
-//        boardImgService.saveImg(board.getBno(), multipartFiles);
+        boardImgService.saveImg(board.getBno(), multipartFiles);
 
         return board.getBno();
 
@@ -73,5 +74,15 @@ public class BoardService {
      return boardDTO;
     }
 
+    public BoardDTO read(Long bno, String memberID){
+
+        Board board =
+                boardRepository.findById(bno).orElseThrow(EntityExistsException::new);
+
+        BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+//                .setBoardImgDTOList(board.getBoardImgList());
+
+        return boardDTO;
+    }
 
 }

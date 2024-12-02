@@ -1,5 +1,6 @@
 package com.example.festival.service;
 
+import com.example.festival.constant.Role;
 import com.example.festival.dto.MemberDTO;
 import com.example.festival.entity.Member;
 import com.example.festival.repository.MemberRepository;
@@ -45,6 +46,21 @@ public class MemberService implements UserDetailsService {
 
         Member member =
                 MemberDTO.dtoEntity(memberDTO);
+
+        member =
+                memberRepository.save(member);
+
+        return member;
+    }
+
+    public Member saveMemberSu(MemberDTO memberDTO) {
+        //회원가입여부 확인
+        validateDuplicateMember(memberDTO.getMemberID());
+
+
+        Member member =
+                MemberDTO.dtoEntity(memberDTO);
+        member.setRole(Role.SUPERADMIN);
 
         member =
                 memberRepository.save(member);

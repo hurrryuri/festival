@@ -1,9 +1,11 @@
 package com.example.festival.entity;
 
+import com.example.festival.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,10 +15,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Table(name = "board")
-public class Board {
+public class Board extends BaseEntity {
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
 
@@ -50,6 +51,10 @@ public class Board {
 
     @Column(nullable = false, length = 255)
     private String tagtitle;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL,
+    orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BoardImg> boardImgList;
 
 }
 

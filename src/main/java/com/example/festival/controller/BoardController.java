@@ -41,6 +41,8 @@ public class BoardController {
     public String registerPost(@Valid BoardDTO boardDTO, BindingResult bindingResult,
                                List<MultipartFile> multipartFile, Model model) {
 
+        log.info("저장됐는지 보여줘" + boardDTO);
+
         if (multipartFile.get(0).isEmpty()) {
             model.addAttribute("msg", "이미지 미등록됨");
             return "/board/register";
@@ -65,6 +67,8 @@ public class BoardController {
             Long saveBoardBno =
                     boardService.saveBoard(boardDTO, multipartFile);
 
+            log.info("사진은 등록되는지 보여줘");
+
             return "redirect:/admin/board/read?id=" + saveBoardBno;
 
         } catch (Exception e) {
@@ -80,7 +84,9 @@ public class BoardController {
 
     public String adminlist(Model model, Principal principal) {
 
-        model.addAttribute("list", boardService.list());
+        List<BoardDTO> boardDTOList =
+                boardService.list();
+        model.addAttribute("boardDTOList", boardDTOList);
 
         return "board/list";
 
@@ -104,6 +110,18 @@ public class BoardController {
         }
 
 
+    }
+
+    @GetMapping("/admin/board/update")
+    public String adminupdateGet(Long id, Model model, Principal principal){
+
+        BoardDTO boardDTO = boardService.read(id, principal.getName());
+        if(boardDTO != null){
+            model.addAttribute("boardDTO", boardDTO);
+            return "board/update";
+        }else {
+            return "redirect:/admin/board/list";
+        }
     }
 
 
