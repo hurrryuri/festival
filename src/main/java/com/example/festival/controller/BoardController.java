@@ -69,7 +69,7 @@ public class BoardController {
 
             log.info("사진은 등록되는지 보여줘");
 
-            return "redirect:/admin/board/read?id=" + saveBoardBno;
+            return "redirect:/admin/board/read?bno=" + saveBoardBno;
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -15,18 +15,12 @@
         <div class="row">
             <div class="col-8 offset-2">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="bno" class="form-label">순번</label>
-                            <input type="number" class="form-control" th:field="*{bno}"  required id="bno" >
-                            <p th:if="${#fields.hasErrors('bno')}" th:errors="*{bno}" class="fieldError"></p>
-                        </div>
-                    </div>
+
 
                     <div class="col-12">
                         <div class="mb-3">
                             <label for="title" class="form-label">축제명</label>
-                            <input type="title" min="0" class="form-control" name="title" th:field="*{title}" id="title">
+                            <input type="text" min="0" class="form-control" th:field="*{title}" id="title">
                             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
                         </div>
                     </div>
@@ -34,8 +28,14 @@
                     <div class="col-12">
                         <div class="mb-3">
                             <label for="schedule"  class="form-label">축제기간</label>
-                            <input type="date" min="0" class="form-control" th:field="*{schedule}" id="schedule">
+                            <div class="d-flex gap-2">
+                                <input type="date" min="0" class="form-control" th:field="*{schedule}" id="schedule">
+                                <span class="mx-2">~</span>
+                                <input type="date" min="0" class="form-control" th:field="*{schedule}">
+                            </div>
+
                             <p th:if="${#fields.hasErrors('schedule')}" th:errors="*{schedule}" class="fieldError"></p>
+
                         </div>
                     </div>
 
@@ -74,21 +74,22 @@
                     <div class="col-12">
                         <div class="mb-3">
                             <label for="tel"  class="form-label">문의처</label>
-                            <input type="text" min="0" class="form-control" th:field="*{tel}" id="tel">
+                            <input type="text" min="0" class="form-control" th:field="*{tel}" id="tel"
+                            name = "tel" maxlength="20" oninput="autoHyphen(this)">
                             <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="mb-3">
-                            <label for="tel"  class="form-label">detail</label>
-                            <input type="text" min="0" class="form-control" th:field="*{detail}" id="tel">
+                            <label for="detail"  class="form-label">상세정보</label>
+                            <input type="text" min="0" class="form-control" th:field="*{detail}" id="detail">
                             <p th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}" class="fieldError"></p>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="mb-3">
-                            <label for="tel"  class="form-label">디테일</label>
-                            <input type="text" min="0" class="form-control" th:field="*{tagtitle}" id="tel">
+                            <label for="tagtitle"  class="form-label">카테고리</label>
+                            <input type="text" min="0" class="form-control" th:field="*{tagtitle}" id="tagtitle">
                             <p th:if="${#fields.hasErrors('tagtitle')}" th:errors="*{tagtitle}" class="fieldError"></p>
                         </div>
                     </div>
@@ -269,6 +270,14 @@
                 }
 
             }
+
+            const autoHyphen = (target) => {
+                target.value = target.value
+                    .replace(/[^0-9]/g, '')
+                    .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/g, "$1-$2-$3")
+                    .replace(/(\-{1,2})$/g, "");
+            }
+
 
 
 

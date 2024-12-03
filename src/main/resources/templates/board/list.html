@@ -26,9 +26,9 @@
                     <tr>
                         <td>#</td>
                         <td>축제명</td>
-                        <td>기간</td>
-                        <td>장소</td>
-                        <td>수정일자</td>
+                        <td>축제기간</td>
+                        <td>축제장소</td>
+                        <td>등록일자</td>
                         <td>수정</td>
                         <td>삭제</td>
                     </tr>
@@ -37,20 +37,20 @@
                     <th:block th:each="boardDTO:${boardDTOList}">
                         <tbody>
                         <tr class="align-middle">
-                            <td th:text="${list.bno}"></td>
+                            <td th:text="${boardDTO.bno}"></td>
                             <td>
-                                <a th:href="@{/admin/board/read(id=${list.bno})}">
+                                <a th:href="@{/admin/board/read(bno=${boardDTO.bno})}">
                                     [[${boardDTO.title}]]
                                 </a>
                             </td>
-                            <td th:text="${list.creatBy}"></td>
-                            <td th:text="${#temporals.format(list.regTime,'yyyy-MM-dd')}"></td>
-                            <td th:text="${#temporals.format(list.updateTime, 'yyy-MM-dd')}"></td>
+                            <td th:text="${boardDTO.schedule}"></td>
+                            <td th:text="${boardDTO.location}"></td>
+                            <td th:text="${#temporals.format(boardDTO.regTime,'yyyy-MM-dd')}"></td>
                             <td>
-                                <button class="btn btn-info updateMoveBtn" th:value="${list.id}">수정</button>
+                                <button class="btn btn-info updateMoveBtn" th:value="${boardDTO.bno}">수정</button>
                             </td>
                             <td>
-                                <button class="btn btn-primary delMoveBtn" th:value="${list.id}">삭제</button>
+                                <button class="btn btn-primary delMoveBtn" th:value="${boardDTO.bno}">삭제</button>
                             </td>
                         </tr>
 

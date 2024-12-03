@@ -1,19 +1,20 @@
 package com.example.festival.dto;
 
+import com.example.festival.entity.BoardImg;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,15 +29,17 @@ public class BoardDTO {
     @Size(max = 50)
     private String title;
 
+
     @NotNull
+    @FutureOrPresent(message = "미래여야한다.")
     private LocalDate schedule;
 
     @NotBlank
     @Size(max = 50)
     private String location;
 
-    @NotNull
-    private int pay;
+    @NotBlank
+    private String pay;
 
     @Size(max = 50)
     private String parking;
@@ -50,11 +53,20 @@ public class BoardDTO {
     @Size(max = 20)
     private String tel;
 
-    private LocalDate updatedate;
-
 
     @Size(max = 255)
     private String tagtitle;
 
+    private List<BoardImgDTO> boardImgDTOList;
 
+
+    private LocalDateTime regTime;
+
+    private LocalDateTime updateTime;
+
+    public BoardDTO setBoardImgDTOList(List<BoardImgDTO> boardImgDTOList) {
+        this.boardImgDTOList = boardImgDTOList;
+
+        return this;
+    }
 }

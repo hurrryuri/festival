@@ -1,6 +1,7 @@
 package com.example.festival.service;
 
 import com.example.festival.dto.BoardDTO;
+import com.example.festival.dto.BoardImgDTO;
 import com.example.festival.entity.Board;
 import com.example.festival.repository.BoardRepository;
 import jakarta.persistence.EntityExistsException;
@@ -69,6 +70,7 @@ public class BoardService {
                 boardRepository.findById(bno).orElseThrow(EntityExistsException::new);
 
         BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+        boardDTO.setBoardImgDTOList(   board.getBoardImgList().stream().map( boardImg ->   modelMapper.map( boardImg , BoardImgDTO.class  ) ).collect(Collectors.toList())  );
 //                .setBoardImgDTOList(board.getBoardImgList());
 
      return boardDTO;

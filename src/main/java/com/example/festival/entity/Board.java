@@ -1,6 +1,7 @@
 package com.example.festival.entity;
 
 import com.example.festival.entity.base.BaseEntity;
+import com.example.festival.entity.base.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "board")
-public class Board extends BaseEntity {
+public class Board extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +33,7 @@ public class Board extends BaseEntity {
     private String location;
 
     @Column(nullable = false, length = 20)
-    private int pay;
+    private String pay;
 
     @Column(length = 50)
     private String parking;
@@ -45,9 +46,8 @@ public class Board extends BaseEntity {
     private String content;
 
     @Column(length = 20)
-    private int tel;
+    private String tel;
 
-    private LocalDate updatedate;
 
     @Column(nullable = false, length = 255)
     private String tagtitle;

@@ -10,23 +10,17 @@
 <body>
 <th:block layout:fragment="content">
 
-    <form action="#" method="post" th:object="${boardDTO}" enctype="multipart/form-data">
+    <form action="/admin/board/read" method="post" th:object="${boardDTO}" enctype="multipart/form-data">
 
         <div class="row">
             <div class="col-8 offset-2">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="bno" class="form-label">순번</label>
-                            <input type="number" class="form-control" th:field="*{bno}"  required id="bno" >
-                            <p th:if="${#fields.hasErrors('bno')}" th:errors="*{bno}" class="fieldError"></p>
-                        </div>
-                    </div>
+
 
                     <div class="col-12">
                         <div class="mb-3">
                             <label for="title" class="form-label">축제명</label>
-                            <input type="title" min="0" class="form-control" th:field="*{title}" id="title">
+                            <input type="text" min="0" class="form-control" th:field="*{title}"   id="title">
                             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
                         </div>
                     </div>
@@ -79,6 +73,22 @@
                         </div>
                     </div>
 
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="detail"  class="form-label">상세정보</label>
+                            <input type="text" min="0" class="form-control" th:field="*{detail}" id="detail">
+                            <p th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="tagtitle"  class="form-label">카테고리</label>
+                            <input type="text" min="0" class="form-control" th:field="*{tagtitle}" id="tagtitle">
+                            <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tagtitle}" class="fieldError"></p>
+                        </div>
+                    </div>
+
 
 
                     <div class="col-12">
@@ -112,7 +122,7 @@
 
                     <div class="col-12">
                         <button type="button" class="btn btn-dark updatebtn">수정</button>
-                        <button type="button">목록</button>
+                        <a href="/admin/board/list" class="btn btn-dark" newproduct>목록</a>
                     </div>
                 </div>
 
@@ -126,7 +136,7 @@
 <th:block layout:fragment="script">
 
     <script th:inline="javascript">
-        let boardBno = [[${boardDTO.id}]]
+        let boardBno = [[${boardDTO.bno}]]
 
         $(document).ready(function (){
             $(".updatebtn").on("click", function (){
