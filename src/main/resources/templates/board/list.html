@@ -16,8 +16,49 @@
         </div>
     </div>
 
-    <div class="row">
+    <!--<div class="row">
         <div class="col">
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/dog.jpg" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+            </div>
+
+
+            <th:block th:if="${#lists.isEmpty(boardDTOList)}">
+                <div class="row">
+                    <div class="col text-center">
+
+                        <h1>비어있음</h1>
+
+                    </div>
+                </div>
+
+            </th:block>
+            <th:block th:unless="${#lists.isEmpty(boardDTOList)}">
+                <div class="row row-cols-md-3">
+
+                    <th:block th:each="boardDTO: ${boardDTOList}">
+                        <div class="col mb-3">
+                            <a th:href="@{/board/read(id=${boardDTOList.bno})}">
+                                <div class="card">
+                                    <img src="/dog.jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${boardDTOList.title}">축제명</h5>
+                                        <p class="card-text text-truncate" th:text="${boardDTOList.startschedule}">축제시작일</p>
+                                        <p class="card-text" th:text="${boardDTOList.location}">장소</p>
+                                    </div>
+                                </div>
+                            </a>
+
+
+                        </div>
+                    </th:block>
+
+                </div>
+            </th:block>-->
             <th:block th:each="boardDTO:${boardDTOList}">
 
                 <table class="table table-striped table-hover">
@@ -26,7 +67,7 @@
                     <tr>
                         <td>#</td>
                         <td>축제명</td>
-                        <td>축제기간</td>
+                        <td>축제일자</td>
                         <td>축제장소</td>
                         <td>등록일자</td>
                         <td>수정</td>
@@ -43,7 +84,7 @@
                                     [[${boardDTO.title}]]
                                 </a>
                             </td>
-                            <td th:text="${boardDTO.schedule}"></td>
+                            <td th:text="${boardDTO.startschedule}"></td>
                             <td th:text="${boardDTO.location}"></td>
                             <td th:text="${#temporals.format(boardDTO.regTime,'yyyy-MM-dd')}"></td>
                             <td>

@@ -32,7 +32,11 @@ public class BoardDTO {
 
     @NotNull
     @FutureOrPresent(message = "미래여야한다.")
-    private LocalDate schedule;
+    private LocalDate startschedule;
+
+    @NotNull
+    @FutureOrPresent(message = "미래여야한다.")
+    private LocalDate endschedule;
 
     @NotBlank
     @Size(max = 50)

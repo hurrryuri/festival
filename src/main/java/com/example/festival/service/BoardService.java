@@ -5,6 +5,7 @@ import com.example.festival.dto.BoardImgDTO;
 import com.example.festival.entity.Board;
 import com.example.festival.repository.BoardRepository;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.codehaus.groovy.tools.shell.IO;
@@ -43,14 +44,14 @@ public class BoardService {
     }
 
 
-    public BoardDTO register(BoardDTO boardDTO){
+    public BoardDTO register(BoardDTO boardDTO) {
         Board board = modelMapper.map(boardDTO, Board.class);
         boardRepository.save(board);
 
         return boardDTO;
     }
 
-    public List<BoardDTO> list(){
+    public List<BoardDTO> list() {
         List<Board> boardList =
                 boardRepository.findAll();
         boardList.forEach(board -> log.info(board));
@@ -64,19 +65,20 @@ public class BoardService {
 
 
     }
-    public BoardDTO read(Long bno){
+
+    public BoardDTO read(Long bno) {
 
         Board board =
                 boardRepository.findById(bno).orElseThrow(EntityExistsException::new);
 
         BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
-        boardDTO.setBoardImgDTOList(   board.getBoardImgList().stream().map( boardImg ->   modelMapper.map( boardImg , BoardImgDTO.class  ) ).collect(Collectors.toList())  );
+        boardDTO.setBoardImgDTOList(board.getBoardImgList().stream().map(boardImg -> modelMapper.map(boardImg, BoardImgDTO.class)).collect(Collectors.toList()));
 //                .setBoardImgDTOList(board.getBoardImgList());
 
-     return boardDTO;
+        return boardDTO;
     }
 
-    public BoardDTO read(Long bno, String memberID){
+    public BoardDTO read(Long bno, String memberID) {
 
         Board board =
                 boardRepository.findById(bno).orElseThrow(EntityExistsException::new);
@@ -87,4 +89,49 @@ public class BoardService {
         return boardDTO;
     }
 
+    public BoardDTO update(BoardDTO boardDTO, Long bno, List<MultipartFile> multipartFiles, Integer[] delbno, Long mainbno) {
+
+        Board board =
+                boardRepository.findById(boardDTO.getBno())
+                        .orElseThrow(EntityNotFoundException::new);
+
+        board.setTitle(boardDTO.getTitle());
+        board.setStartschedule(boardDTO.getStartschedule());
+        board.setEndschedule(boardDTO.getEndschedule());
+        board.setLocation(boardDTO.getLocation());
+        board.setPay(boardDTO.getPay());
+        board.setParking(boardDTO.getParking());
+        board.setDetail(boardDTO.getDetail());
+        board.setContent(boardDTO.getContent());
+        board.setTel(boardDTO.getTel());
+        board.setTagtitle(boardDTO.getTagtitle());
+
+        if (delbno != null) {
+            for (Integer bnoInteger : delbno) {
+
+                if (bno != null && !bno.equals("")) {
+                    log.info("삭제할 번호는 bno" + bno);
+                    boardImgService.removeimg(bno.longValue());
+
+                }
+
+            }
+        }
+
+        try {
+            boardImgService.update(bno, multipartFiles, mainbno);
+        } catch (IOException e) {
+
+        }
+        return null;
+    }
+
+    public void remove(Long bno) {
+        log.info("서비스로 들어온 삭제할 보드넘버 : " + bno);
+
+
+        boardRepository.deleteById(bno);
+
+
+    }
 }

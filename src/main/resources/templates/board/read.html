@@ -12,70 +12,107 @@
 
     <form action="/admin/board/read" method="post" th:object="${boardDTO}" enctype="multipart/form-data">
 
+        <div class="col-12">
+            <div class="mb-3 mt-4">
+                <input type="text" min="0" class="form-control-plaintext h3" th:field="*{title}"  id="title">
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
+            </div>
+        </div>
+
+
+
         <div class="row">
-            <div class="col-8 offset-2">
+            <div class="col">
+                <div class="row row-cols-1 row-cols-md-2 g-3">
+                    <div class="col">
+                        <img th:src="${boardDTO.boardImgDTOList.get(0).imgUrl}" class="card-img-top" th:if="${not #lists.isEmpty(boardDTO.boardImgDTOList)}" th:alt="${boardDTO.getBoardImgDTOList().get(0).getImgName}">
+                    </div>
+                    <div class="col">
+
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="d-flex gap-2">
+                                    <input type="date" min="0" class="form-control-plaintext h4" th:value="*{startschedule}" id="startschedule" readonly>
+                                    <span class="mx-2 h4">~</span>
+                                    <input type="date" min="0" class="form-control-plaintext h4"  th:value="*{endschedule}" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-6">
+                            <div class="row mb-3">
+                                <div class="col-auto">
+                                    <label for="location" class="col-form-label">축제장소 : </label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" min="0" class="col-auto form-control-plaintext" th:field="*{location}" id="location">
+                                </div>
+                                <p th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="fieldError"></p>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row mb-3">
+                                <div class="col-auto">
+                                    <label for="pay"  class="col-form-label">입장료 : </label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" min="0" class="col-auto form-control-plaintext" th:field="*{pay}" id="pay">
+                                </div>
+                                <p th:if="${#fields.hasErrors('pay')}" th:errors="*{pay}" class="fieldError"></p>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row mb-3">
+                                <div class="col-auto">
+                                    <label for="parking"  class="col-form-label">주차정보 : </label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" min="0" class="col-auto form-control-plaintext" th:field="*{parking}" id="parking">
+                                </div>
+                                <p th:if="${#fields.hasErrors('parking')}" th:errors="*{parking}" class="fieldError"></p>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row mb-3">
+                                <div class="col-auto">
+                                    <label for="tel"  class="col-form-label">문의처 : </label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" min="0" class="col-auto form-control-plaintext" th:field="*{tel}" id="tel">
+                                </div>
+                                <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="content" class="form-label">축제내용</label>
+                                <textarea class="form-control" th:field="*{content}" id="content" rows="4"></textarea>
+                                <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"></p>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col">
                 <div class="row">
 
 
                     <div class="col-12">
                         <div class="mb-3">
-                            <label for="title" class="form-label">축제명</label>
-                            <input type="text" min="0" class="form-control" th:field="*{title}"   id="title">
-                            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="schedule"  class="form-label">축제기간</label>
-                            <input type="text" min="0" class="form-control" th:field="*{schedule}" id="schedule">
-                            <p th:if="${#fields.hasErrors('schedule')}" th:errors="*{schedule}" class="fieldError"></p>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="location"  class="form-label">축제장소</label>
-                            <input type="text" min="0" class="form-control" th:field="*{location}" id="location">
-                            <p th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="fieldError"></p>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="pay"  class="form-label">입장료</label>
-                            <input type="text" min="0" class="form-control" th:field="*{pay}" id="pay">
-                            <p th:if="${#fields.hasErrors('pay')}" th:errors="*{pay}" class="fieldError"></p>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="parking"  class="form-label">주차정보</label>
-                            <input type="text" min="0" class="form-control" th:field="*{parking}" id="parking">
-                            <p th:if="${#fields.hasErrors('parking')}" th:errors="*{parking}" class="fieldError"></p>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="content" class="form-label">축제내용</label>
-                            <textarea class="form-control" th:field="*{content}" id="content" rows="3"></textarea>
-                            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"></p>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="tel"  class="form-label">문의처</label>
-                            <input type="text" min="0" class="form-control" th:field="*{tel}" id="tel">
-                            <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="detail"  class="form-label">상세정보</label>
+                            <label for="detail"  class="form-label">추가정보</label>
                             <input type="text" min="0" class="form-control" th:field="*{detail}" id="detail">
                             <p th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}" class="fieldError"></p>
                         </div>
@@ -93,17 +130,6 @@
 
                     <div class="col-12">
                         <div class="mb-3 imgA">
-
-                            <div class="row  mb-5">
-                                <th:block th:each="img: ${boardDTO.boardImgDTOList}">
-                                    <th:block th:if="${img.repimgYn == 'Y'}">
-                                        <div class="col-12">
-                                            대표이미지
-                                            <img width="100%" th:src="${img.imgUrl}">
-                                        </div>
-                                    </th:block>
-                                </th:block>
-                            </div>
 
                             추가이미지
                             <div class="row row-cols-md-2">

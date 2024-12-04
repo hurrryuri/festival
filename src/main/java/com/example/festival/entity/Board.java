@@ -27,7 +27,10 @@ public class Board extends BaseEntity{
     private String title;
 
     @Column(nullable = false, length = 50)
-    private LocalDate schedule;
+    private LocalDate startschedule;
+
+    @Column(nullable = false, length = 50)
+    private LocalDate endschedule;
 
     @Column(nullable = false, length = 50)
     private String location;

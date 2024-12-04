@@ -5,12 +5,12 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>축제등록화면</title>
+    <title>축제수정화면</title>
 </head>
 <body>
 <th:block layout:fragment="content">
 
-    <form action="/admin/board/new" method="post" th:object="${boardDTO}" enctype="multipart/form-data">
+    <form action="/admin/board/update" method="post" th:object="${boardDTO}" enctype="multipart/form-data">
 
         <div class="row">
             <div class="col-8 offset-2">
@@ -119,7 +119,7 @@
                     </div>
 
                     <div class="col-12">
-                        <button class="btn btn-dark">저장</button>
+                        <button class="btn btn-dark">수정</button>
                         <button type="button" class="btn btn-dark listbtn">목록</button>
                         <script>
                             $(".listbtn").on("click", function (){

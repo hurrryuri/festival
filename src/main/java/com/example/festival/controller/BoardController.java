@@ -124,6 +124,32 @@ public class BoardController {
         }
     }
 
+    @PostMapping("/admin/board/update")
+    public String boardupdate(@Valid BoardDTO boardDTO, BindingResult bindingResult, List<MultipartFile> multipartFiles, Integer[] delbno, Long mainbno){
+
+        if(bindingResult.hasErrors()){
+            log.info("유효성검사 에러");
+            log.info(bindingResult.getAllErrors());
+
+            return "/board/update";
+        }
+
+        boardService.update(boardDTO, boardDTO.getBno(), multipartFiles, delbno, mainbno);
+
+        return null;
+    }
+
+    @PostMapping("/admin/board/del")
+    public String delboard(Long bno){
+
+        log.info("삭제할 아이템번호 : " + bno);
+
+        boardService.remove(bno);
+
+
+        return "redirect:/admin/board/list";
+    }
+
 
     @GetMapping("/festival/list")
     public String aaaa() {
