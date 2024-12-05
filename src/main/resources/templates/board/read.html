@@ -30,58 +30,56 @@
                     <div class="col">
 
                         <div class="col-6">
-                            <div class="mb-3">
-                                <div class="d-flex gap-2">
+
                                     <input type="date" min="0" class="form-control-plaintext h4" th:value="*{startschedule}" id="startschedule" readonly>
                                     <span class="mx-2 h4">~</span>
                                     <input type="date" min="0" class="form-control-plaintext h4"  th:value="*{endschedule}" readonly>
-                                </div>
-                            </div>
+
                         </div>
 
 
-                        <div class="col-6">
+                        <div class="col">
                             <div class="row mb-3">
-                                <div class="col-auto">
+                                <div class="col-3">
                                     <label for="location" class="col-form-label">축제장소 : </label>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-9">
                                     <input type="text" min="0" class="col-auto form-control-plaintext" th:field="*{location}" id="location">
                                 </div>
                                 <p th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="fieldError"></p>
                             </div>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col">
                             <div class="row mb-3">
-                                <div class="col-auto">
+                                <div class="col-3">
                                     <label for="pay"  class="col-form-label">입장료 : </label>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-9">
                                     <input type="text" min="0" class="col-auto form-control-plaintext" th:field="*{pay}" id="pay">
                                 </div>
                                 <p th:if="${#fields.hasErrors('pay')}" th:errors="*{pay}" class="fieldError"></p>
                             </div>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col">
                             <div class="row mb-3">
-                                <div class="col-auto">
+                                <div class="col-3">
                                     <label for="parking"  class="col-form-label">주차정보 : </label>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-9">
                                     <input type="text" min="0" class="col-auto form-control-plaintext" th:field="*{parking}" id="parking">
                                 </div>
                                 <p th:if="${#fields.hasErrors('parking')}" th:errors="*{parking}" class="fieldError"></p>
                             </div>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col">
                             <div class="row mb-3">
-                                <div class="col-auto">
+                                <div class="col-3">
                                     <label for="tel"  class="col-form-label">문의처 : </label>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-9">
                                     <input type="text" min="0" class="col-auto form-control-plaintext" th:field="*{tel}" id="tel">
                                 </div>
                                 <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>
