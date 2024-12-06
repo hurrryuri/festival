@@ -90,8 +90,12 @@
                     <div class="col-12">
                         <div class="mb-3">
                             <label for="tagtitle"  class="form-label">카테고리</label>
-                            <input type="text" min="0" class="form-control" th:field="*{tagtitle}" id="tagtitle">
-                            <p th:if="${#fields.hasErrors('tagtitle')}" th:errors="*{tagtitle}" class="fieldError"></p>
+
+                            <select name="catepk">
+                                <th:block th:each="a: ${category}">
+                                    <option th:value="${a.id}">[[${a.categoryname}]]</option>
+                                </th:block>
+
                         </div>
                     </div>
 

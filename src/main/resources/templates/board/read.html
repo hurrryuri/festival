@@ -29,12 +29,18 @@
                     </div>
                     <div class="col">
 
-                        <div class="col-6">
+                        <div class="col">
+                            <div class="row mb-3">
 
+
+                                <div class="col-4">
                                     <input type="date" min="0" class="form-control-plaintext h4" th:value="*{startschedule}" id="startschedule" readonly>
-                                    <span class="mx-2 h4">~</span>
+                                </div>
+                                    <span class="mx-2 h4 col-1">~</span>
+                                <div class="col">
                                     <input type="date" min="0" class="form-control-plaintext h4"  th:value="*{endschedule}" readonly>
-
+                                </div>
+                            </div>
                         </div>
 
 

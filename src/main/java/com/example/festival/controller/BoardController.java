@@ -1,7 +1,12 @@
 package com.example.festival.controller;
 
 import com.example.festival.dto.BoardDTO;
+import com.example.festival.dto.CategoryDTO;
+import com.example.festival.repository.CategoryRepository;
+import com.example.festival.repository.SmallCateRepository;
 import com.example.festival.service.BoardService;
+import com.example.festival.service.CategoryService;
+import com.example.festival.service.SmallCateService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +29,10 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
+    private final SmallCateService smallCateService;
+    private final SmallCateRepository smallCateRepository;
 
     @GetMapping("/admin/board/new")
     public String registerGet(Model model, Principal principal) {
@@ -33,6 +42,8 @@ public class BoardController {
         if (principal != null) {
         }
         model.addAttribute("boardDTO", new BoardDTO());
+        model.addAttribute("category", categoryRepository.findAll());
+        model.addAttribute("smallCate", smallCateRepository.findAll());
 
         return "board/register";
     }
@@ -155,5 +166,13 @@ public class BoardController {
     public String aaaa() {
 
        return null;
+    }
+
+    @PostMapping("/category/register")
+    public String save(CategoryDTO categoryDTO){
+
+        categoryService.savecategory(categoryDTO);
+
+        return "redirect:/category/category";
     }
 }
