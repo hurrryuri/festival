@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>b</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <div class="row">
+        <form action="/category/register" method="post">
+            카테고리명 : <input type="text" name="categoryname">
+            <button>카테고리저장</button>
+        </form>
+    </div>
+    <hr>
+    <div class="row">
+        <form action="/subcategory/register" method="post">
+            <select name="categoryid">
+                <th:block th:each="list: ${categorylist}">
+                    <option th:value="${list.id}"  th:text="${list.categoryname}"></option>
+                </th:block>
+
+            </select>
+            카테고리 '소' 명 : <input type="text" name="categoryname">
+            <button>카테고리 소 저장</button>
+        </form>
+    </div>
+    <hr>
+
+
+    <div class="row">
+        <form action="/category/boardnew" method="post">
+
+            게시판 종류선택 :
+            <select name="categoryid" class="category">
+                <option>선택</option>
+                <th:block th:each="list: ${categorylist}">
+                    <option th:value="${list.id}"  th:text="${list.categoryname}"></option>
+                </th:block>
+
+            </select>
+
+            <select name="subcategoryid" class="subcategory">
+
+                <option value="">선택</option>
+
+            </select>
+
+            <br>
+            게시판 제목 : <input type="text" name="title">
+            <button>카테고리저장</button>
+        </form>
+    </div>
+
+    <script th:inline="javascript">
+        let subcategorylist = [[${subcategorylist}]]
+        $(".category").on("change", function () {
+
+            let str = "<option value=''>선택해주세요</option>";
+            for (let i = 0; i < subcategorylist.length; i++) {
+
+                if($(this).val() == subcategorylist[i].categoryDTO.id ){
+                    str += `<option value="${subcategorylist[i].id}" >${subcategorylist[i].categoryname}</option>`
+                }
+            }
+
+            $(".subcategory").html(str)
+        })
+
+    </script>
+
+
+
+</th:block>
+
+
+
+</body>
+</html>

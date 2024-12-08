@@ -11,10 +11,10 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class SmallCate {
+public class SubCategory {
 
     @Id
-    @Column(name = "smallCate_id")       //테이블에서 매핑될 컬럼
+    @Column(name = "subcategory_id")       //테이블에서 매핑될 컬럼
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

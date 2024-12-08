@@ -9,17 +9,17 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class SmallCateDTO {
+public class SubCategoryDTO {
 
     private Long id;
 
-    private Long categoryId;
+    private Long categoryid;
 
     private String categoryname;
 
     private CategoryDTO categoryDTO;
 
-    public SmallCateDTO setCategoryDTO(CategoryDTO categoryDTO) {
+    public SubCategoryDTO setCategoryDTO(CategoryDTO categoryDTO) {
         this.categoryDTO = categoryDTO;
         return this;
     }
