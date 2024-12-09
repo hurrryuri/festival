@@ -55,6 +55,14 @@ public class Board extends BaseEntity{
     @Column(nullable = false, length = 255)
     private String tagtitle;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subcategory_id")
+    private SubCategory subCategory;
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL,
     orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardImg> boardImgList;

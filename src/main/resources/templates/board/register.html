@@ -76,7 +76,7 @@
                         <div class="mb-3">
                             <label for="tel"  class="form-label">문의처</label>
                             <input type="text" min="0" class="form-control" th:field="*{tel}" id="tel"
-                            name = "tel" maxlength="20" oninput="autoHyphen(this)">
+                            name = "tel" maxlength="20" >
                             <p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>
                         </div>
                     </div>
@@ -87,17 +87,77 @@
                             <p th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}" class="fieldError"></p>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="tagtitle"  class="form-label">카테고리</label>
 
-                            <select name="catepk">
+
+
+                    <div class="col">
+                        <div class="mb-3 d-flex">
+                            <label for="catagoryA"  class="form-label">카테고리</label>
+                            <select name="categoryid" id="catagoryA" class="catagoryA">
+
                                 <th:block th:each="a: ${category}">
                                     <option th:value="${a.id}">[[${a.categoryname}]]</option>
                                 </th:block>
                             </select>
                         </div>
                     </div>
+
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="catagoryB"  class="form-label">카테고리</label>
+                            <select name="subcategory_id" id="catagoryB" class="catagoryB">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="tagtitle"  class="form-label">태그명</label>
+                            <input type="text"  class="form-control" th:field="*{tagtitle}" id="tagtitle" required>
+                            <p th:if="${#fields.hasErrors('tagtitle')}" th:errors="*{tagtitle}" class="fieldError"></p>
+                        </div>
+                    </div>
+
+
+                    <script th:inline="javascript">
+
+                        $(document).ready(function () {
+
+                            let subCategory = [[${subCategory}]]
+                            let catagoryB = $(".catagoryB")
+
+
+                            console.log(subCategory)
+                            $(".catagoryA").on("change", function () {
+                                subcategoryRead($(this).val())
+
+                            })
+                            function subcategoryRead(val) {
+                                let categoryid = val
+                                console.log(categoryid)
+                                let subca = "";
+                                subca = `<option value="">내용없음</option>`
+                                for(let i =0; i< subCategory.length; i++){
+                                    console.log(subCategory[i].categoryDTO.id + "값")
+                                    if( subCategory[i].categoryDTO.id == categoryid ){
+                                        console.log(subCategory[i])
+
+                                        subca += `<option value="${subCategory[i].id}">${subCategory[i].categoryname}</option>`
+
+                                    }
+                                }
+                                console.log(subca)
+                                if(subca == ""){
+                                    subca = `<option value="">내용없음</option>`
+
+                                }
+                                catagoryB.html(subca)
+
+                            }
+                            subcategoryRead($(".catagoryA").val() )
+
+                        })
+                    </script>
 
 
                     <!--이미지 미리보기 -->

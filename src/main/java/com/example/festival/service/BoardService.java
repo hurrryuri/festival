@@ -3,7 +3,11 @@ package com.example.festival.service;
 import com.example.festival.dto.BoardDTO;
 import com.example.festival.dto.BoardImgDTO;
 import com.example.festival.entity.Board;
+import com.example.festival.entity.Category;
+import com.example.festival.entity.SubCategory;
 import com.example.festival.repository.BoardRepository;
+import com.example.festival.repository.CategoryRepository;
+import com.example.festival.repository.SubCategoryRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.IIOException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,10 +35,36 @@ public class BoardService {
     private final ModelMapper modelMapper;
     private final BoardImgService boardImgService;
 
+    private final CategoryRepository categoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
     public Long saveBoard(BoardDTO boardDTO, List<MultipartFile> multipartFiles) throws IOException {
 
+        //카테고리 대 , 소   String tag
+        log.info(boardDTO);
         Board board = modelMapper.map(boardDTO, Board.class);
+
+        if(boardDTO.getCategoryid() !=null && !boardDTO.getCategoryid().equals("")){
+            Optional<Category> categoryOptional =
+            categoryRepository.findById(boardDTO.getCategoryid());
+
+            Category category =
+            categoryOptional.orElseThrow(EntityNotFoundException::new);
+
+            board.setCategory(category);
+        }
+
+        if(boardDTO.getSubcategory_id() !=null && !boardDTO.getSubcategory_id().equals("")){
+            Optional<SubCategory> subCategoryOptional =
+                    subCategoryRepository.findById(boardDTO.getSubcategory_id());
+
+            SubCategory subCategory =
+                    subCategoryOptional.orElseThrow(EntityNotFoundException::new);
+
+            board.setSubCategory(subCategory);
+        }
+
+
 
         board = boardRepository.save(board);
 
@@ -104,7 +135,6 @@ public class BoardService {
         board.setDetail(boardDTO.getDetail());
         board.setContent(boardDTO.getContent());
         board.setTel(boardDTO.getTel());
-        board.setTagtitle(boardDTO.getTagtitle());
 
         if (delbno != null) {
             for (Integer bnoInteger : delbno) {

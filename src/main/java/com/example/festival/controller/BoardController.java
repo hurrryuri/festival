@@ -29,6 +29,8 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    private final CategoryService categoryService;
+    private final SubCategoryService subCategoryService;
     @GetMapping("/admin/board/new")
     public String registerGet(Model model, Principal principal) {
         if (principal == null) {
@@ -37,6 +39,8 @@ public class BoardController {
         if (principal != null) {
         }
         model.addAttribute("boardDTO", new BoardDTO());
+        model.addAttribute("category", categoryService.list());
+        model.addAttribute("subCategory", subCategoryService.list2());
 
         return "board/register";
     }

@@ -50,7 +50,7 @@ public class CategoryController {
 
         return "redirect:/category/category";
     }
-
+//어 오류까??
     @PostMapping("/category/boardnew")
     public String save(BoardCategoryDTO boardCategoryDTO){
 

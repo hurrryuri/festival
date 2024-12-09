@@ -57,9 +57,14 @@ public class BoardDTO {
     @Size(max = 20)
     private String tel;
 
-
+    @NotBlank
     @Size(max = 255)
     private String tagtitle;
+
+
+    private Long categoryid;
+
+    private Long subcategory_id;
 
     private List<BoardImgDTO> boardImgDTOList;
 
